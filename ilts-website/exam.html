@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>ILTS - Online Exam</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <link rel="stylesheet" href="css/style.css"/>
+</head>
+<body>
+
+<!-- Pre-Exam Screen -->
+<div id="preExamScreen">
+  <nav class="navbar navbar-dark" style="background:#050510; border-bottom:1px solid #1a1a3e;">
+    <div class="container">
+      <a class="navbar-brand fw-bold" href="index.html">
+        <i class="fas fa-graduation-cap me-2"></i>ILTS
+      </a>
+      <span class="text-muted small">MCA Entrance Examination 2026</span>
+    </div>
+  </nav>
+  <div class="container py-5">
+    <div class="row justify-content-center">
+      <div class="col-lg-7">
+        <div class="form-card text-center">
+          <i class="fas fa-laptop-code fa-4x text-gradient mb-4"></i>
+          <h2 class="text-white fw-bold">MCA Entrance Exam</h2>
+          <p class="text-muted mb-4">Please read the instructions carefully before starting.</p>
+          <div class="exam-info-grid mb-4">
+            <div class="exam-info-item">
+              <i class="fas fa-question-circle text-primary"></i>
+              <span class="text-white">30 Questions</span>
+            </div>
+            <div class="exam-info-item">
+              <i class="fas fa-clock text-warning"></i>
+              <span class="text-white">30 Minutes</span>
+            </div>
+            <div class="exam-info-item">
+              <i class="fas fa-star text-success"></i>
+              <span class="text-white">90 Marks</span>
+            </div>
+            <div class="exam-info-item">
+              <i class="fas fa-cut text-danger"></i>
+              <span class="text-white">Cutoff: 50%</span>
+            </div>
+          </div>
+          <div class="instructions-box text-start mb-4">
+            <h6 class="text-white mb-3"><i class="fas fa-info-circle me-2 text-warning"></i>Instructions</h6>
+            <ul class="text-muted small">
+              <li>Each question carries 3 marks. No negative marking.</li>
+              <li>Do not refresh or close the browser during the exam.</li>
+              <li>You can navigate between questions using the question palette.</li>
+              <li>The exam will auto-submit when time runs out.</li>
+              <li>Ensure stable internet connection before starting.</li>
+              <li>Subjects: Programming (10), DBMS (10), Aptitude (10)</li>
+            </ul>
+          </div>
+          <div class="mb-4">
+            <label class="form-label text-muted">Enter Registration ID to Start</label>
+            <input type="text" class="form-control custom-input text-center" id="regIdInput" placeholder="e.g. ILTS-2026-12345"/>
+          </div>
+          <button class="btn btn-gradient btn-lg px-5" onclick="startExam()">
+            <i class="fas fa-play me-2"></i>Start Exam
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Exam Screen -->
+<div id="examScreen" class="d-none">
+  <div class="exam-topbar">
+    <div class="container d-flex justify-content-between align-items-center py-2">
+      <div class="d-flex align-items-center gap-3">
+        <span class="text-white fw-bold"><i class="fas fa-graduation-cap me-2"></i>ILTS Exam</span>
+        <span class="badge bg-primary" id="subjectBadge">Programming</span>
+      </div>
+      <div class="exam-timer" id="examTimer">
+        <i class="fas fa-clock me-2"></i><span id="timerDisplay">30:00</span>
+      </div>
+      <div class="text-muted small">
+        <span id="answeredCount">0</span>/30 Answered
+      </div>
+    </div>
+  </div>
+
+  <div class="container-fluid py-3" style="max-width:1200px;">
+    <div class="row g-3">
+      <!-- Question Panel -->
+      <div class="col-lg-8">
+        <div class="question-card">
+          <div class="d-flex justify-content-between align-items-center mb-3">
+            <span class="text-muted small">Question <span id="currentQNum">1</span> of 30</span>
+            <span class="badge" id="qTypeBadge" style="background:rgba(99,102,241,0.2); color:#818cf8;">Programming</span>
+          </div>
+          <div class="progress mb-3" style="height:4px; background:#1a1a3e;">
+            <div class="progress-bar bg-gradient-bar" id="examProgress" style="width:3.3%"></div>
+          </div>
+          <h5 class="text-white mb-4" id="questionText">Loading question...</h5>
+          <div class="options-list" id="optionsList"></div>
+          <div class="d-flex justify-content-between mt-4">
+            <button class="btn btn-outline-secondary px-4" id="prevBtn" onclick="changeQuestion(-1)" disabled>
+              <i class="fas fa-arrow-left me-2"></i>Previous
+            </button>
+            <button class="btn btn-outline-warning px-4" onclick="markForReview()">
+              <i class="fas fa-bookmark me-2"></i>Mark for Review
+            </button>
+            <button class="btn btn-gradient px-4" id="nextBtn" onclick="changeQuestion(1)">
+              Next <i class="fas fa-arrow-right ms-2"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Question Palette -->
+      <div class="col-lg-4">
+        <div class="palette-card">
+          <h6 class="text-white mb-3"><i class="fas fa-th me-2"></i>Question Palette</h6>
+          <div class="palette-legend mb-3">
+            <span class="legend-item"><span class="dot dot-answered"></span>Answered</span>
+            <span class="legend-item"><span class="dot dot-unanswered"></span>Not Answered</span>
+            <span class="legend-item"><span class="dot dot-review"></span>Review</span>
+            <span class="legend-item"><span class="dot dot-current"></span>Current</span>
+          </div>
+          <div class="question-palette" id="questionPalette"></div>
+          <button class="btn btn-danger w-100 mt-3" onclick="confirmSubmit()">
+            <i class="fas fa-paper-plane me-2"></i>Submit Exam
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Submit Confirm Modal -->
+<div class="modal fade" id="submitModal" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content bg-dark-card border-0">
+      <div class="modal-body text-center py-4">
+        <i class="fas fa-exclamation-triangle fa-3x text-warning mb-3"></i>
+        <h5 class="text-white">Submit Exam?</h5>
+        <p class="text-muted" id="submitSummary">You have answered 0 out of 30 questions.</p>
+        <div class="d-flex gap-3 justify-content-center mt-3">
+          <button class="btn btn-outline-secondary px-4" data-bs-dismiss="modal">Cancel</button>
+          <button class="btn btn-danger px-4" onclick="submitExam()">Submit Now</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Result Screen -->
+<div id="resultScreen" class="d-none">
+  <div class="container py-5">
+    <div class="row justify-content-center">
+      <div class="col-lg-7">
+        <div class="form-card text-center">
+          <div id="resultIcon" class="mb-4"></div>
+          <h2 class="text-white fw-bold" id="resultTitle">Exam Result</h2>
+          <p class="text-muted" id="resultSubtitle"></p>
+          <div class="score-circle mx-auto my-4" id="scoreCircle">
+            <span id="scoreDisplay">0</span>
+            <small>/90</small>
+          </div>
+          <div class="result-stats row g-3 mb-4">
+            <div class="col-4">
+              <div class="stat-box">
+                <h4 class="text-success" id="correctCount">0</h4>
+                <p class="text-muted small mb-0">Correct</p>
+              </div>
+            </div>
+            <div class="col-4">
+              <div class="stat-box">
+                <h4 class="text-danger" id="wrongCount">0</h4>
+                <p class="text-muted small mb-0">Wrong</p>
+              </div>
+            </div>
+            <div class="col-4">
+              <div class="stat-box">
+                <h4 class="text-warning" id="skippedCount">0</h4>
+                <p class="text-muted small mb-0">Skipped</p>
+              </div>
+            </div>
+          </div>
+          <div id="resultAction"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>

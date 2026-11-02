@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>ILTS - Student Registration</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <link rel="stylesheet" href="css/style.css"/>
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-dark fixed-top" id="mainNav">
+  <div class="container">
+    <a class="navbar-brand fw-bold fs-4" href="index.html">
+      <i class="fas fa-graduation-cap me-2"></i>ILTS
+    </a>
+    <div class="ms-auto">
+      <a href="index.html" class="btn btn-outline-light btn-sm px-3">
+        <i class="fas fa-home me-1"></i>Home
+      </a>
+    </div>
+  </div>
+</nav>
+
+<div class="page-header text-center text-white">
+  <div class="container">
+    <h1 class="display-5 fw-bold"><i class="fas fa-user-plus me-3"></i>Student Registration</h1>
+    <p class="lead text-muted">MCA Entrance Examination 2026 — Fill all details carefully</p>
+    <!-- Progress Steps -->
+    <div class="reg-steps d-flex justify-content-center gap-3 mt-4 flex-wrap">
+      <div class="reg-step active" id="step-indicator-1"><span>1</span> Personal Info</div>
+      <div class="reg-step" id="step-indicator-2"><span>2</span> Academic Info</div>
+      <div class="reg-step" id="step-indicator-3"><span>3</span> Documents</div>
+      <div class="reg-step" id="step-indicator-4"><span>4</span> Confirm</div>
+    </div>
+  </div>
+</div>
+
+<div class="container py-5">
+  <div class="row justify-content-center">
+    <div class="col-lg-8">
+      <div class="form-card">
+        <form id="registrationForm" novalidate>
+
+          <!-- Step 1: Personal Info -->
+          <div class="form-step" id="formStep1">
+            <h4 class="text-white mb-4"><i class="fas fa-user me-2 text-gradient"></i>Personal Information</h4>
+            <div class="row g-3">
+              <div class="col-md-6">
+                <label class="form-label text-muted">First Name *</label>
+                <input type="text" class="form-control custom-input" id="firstName" placeholder="Enter first name" required/>
+                <div class="invalid-feedback">First name is required.</div>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label text-muted">Last Name *</label>
+                <input type="text" class="form-control custom-input" id="lastName" placeholder="Enter last name" required/>
+                <div class="invalid-feedback">Last name is required.</div>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label text-muted">Date of Birth *</label>
+                <input type="date" class="form-control custom-input" id="dob" required/>
+                <div class="invalid-feedback">Date of birth is required.</div>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label text-muted">Gender *</label>
+                <select class="form-select custom-input" id="gender" required>
+                  <option value="">Select Gender</option>
+                  <option>Male</option>
+                  <option>Female</option>
+                  <option>Other</option>
+                </select>
+                <div class="invalid-feedback">Please select gender.</div>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label text-muted">Email Address *</label>
+                <input type="email" class="form-control custom-input" id="email" placeholder="your@email.com" required/>
+                <div class="invalid-feedback">Valid email is required.</div>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label text-muted">Mobile Number *</label>
+                <input type="tel" class="form-control custom-input" id="mobile" placeholder="+91 XXXXX XXXXX" pattern="[0-9]{10}" required/>
+                <div class="invalid-feedback">Valid 10-digit mobile number required.</div>
+              </div>
+              <div class="col-12">
+                <label class="form-label text-muted">Address *</label>
+                <textarea class="form-control custom-input" id="address" rows="2" placeholder="Full address" required></textarea>
+                <div class="invalid-feedback">Address is required.</div>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label text-muted">State *</label>
+                <select class="form-select custom-input" id="state" required>
+                  <option value="">Select State</option>
+                  <option>Uttar Pradesh</option><option>Delhi</option><option>Maharashtra</option>
+                  <option>Karnataka</option><option>Tamil Nadu</option><option>Gujarat</option>
+                  <option>Rajasthan</option><option>West Bengal</option><option>Other</option>
+                </select>
+                <div class="invalid-feedback">Please select state.</div>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label text-muted">Category *</label>
+                <select class="form-select custom-input" id="category" required>
+                  <option value="">Select Category</option>
+                  <option>General</option><option>OBC</option><option>SC</option><option>ST</option><option>EWS</option>
+                </select>
+                <div class="invalid-feedback">Please select category.</div>
+              </div>
+            </div>
+            <div class="d-flex justify-content-end mt-4">
+              <button type="button" class="btn btn-gradient px-5" onclick="nextStep(1)">
+                Next <i class="fas fa-arrow-right ms-2"></i>
+              </button>
+            </div>
+          </div>
+
+          <!-- Step 2: Academic Info -->
+          <div class="form-step d-none" id="formStep2">
+            <h4 class="text-white mb-4"><i class="fas fa-book me-2 text-gradient"></i>Academic Information</h4>
+            <div class="row g-3">
+              <div class="col-md-6">
+                <label class="form-label text-muted">Graduation Degree *</label>
+                <select class="form-select custom-input" id="degree" required>
+                  <option value="">Select Degree</option>
+                  <option>B.Sc (Computer Science)</option>
+                  <option>B.Sc (IT)</option>
+                  <option>BCA</option>
+                  <option>B.Tech (CS/IT)</option>
+                  <option>B.Com with IT</option>
+                  <option>Other</option>
+                </select>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label text-muted">Graduation Year *</label>
+                <input type="number" class="form-control custom-input" id="gradYear" placeholder="e.g. 2024" min="2000" max="2026" required/>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label text-muted">Graduation Percentage / CGPA *</label>
+                <input type="text" class="form-control custom-input" id="gradPercent" placeholder="e.g. 75% or 8.5 CGPA" required/>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label text-muted">University / College Name *</label>
+                <input type="text" class="form-control custom-input" id="university" placeholder="University name" required/>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label text-muted">12th Percentage *</label>
+                <input type="text" class="form-control custom-input" id="twelfthPercent" placeholder="e.g. 80%" required/>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label text-muted">10th Percentage *</label>
+                <input type="text" class="form-control custom-input" id="tenthPercent" placeholder="e.g. 85%" required/>
+              </div>
+              <div class="col-12">
+                <label class="form-label text-muted">Preferred MCA Specialization *</label>
+                <select class="form-select custom-input" id="specialization" required>
+                  <option value="">Select Specialization</option>
+                  <option>Artificial Intelligence & ML</option>
+                  <option>Cloud Computing</option>
+                  <option>Cybersecurity</option>
+                  <option>Data Science & Analytics</option>
+                  <option>Full Stack Development</option>
+                  <option>Mobile App Development</option>
+                </select>
+              </div>
+            </div>
+            <div class="d-flex justify-content-between mt-4">
+              <button type="button" class="btn btn-outline-secondary px-4" onclick="prevStep(2)">
+                <i class="fas fa-arrow-left me-2"></i>Back
+              </button>
+              <button type="button" class="btn btn-gradient px-5" onclick="nextStep(2)">
+                Next <i class="fas fa-arrow-right ms-2"></i>
+              </button>
+            </div>
+          </div>
+
+          <!-- Step 3: Documents -->
+          <div class="form-step d-none" id="formStep3">
+            <h4 class="text-white mb-4"><i class="fas fa-file-upload me-2 text-gradient"></i>Upload Documents</h4>
+            <div class="row g-3">
+              <div class="col-md-6">
+                <label class="form-label text-muted">Passport Photo *</label>
+                <div class="upload-box" id="photoBox">
+                  <i class="fas fa-camera fa-2x text-muted mb-2"></i>
+                  <p class="text-muted small mb-1">Click to upload photo</p>
+                  <p class="text-muted" style="font-size:11px;">JPG/PNG, max 200KB</p>
+                  <input type="file" class="d-none" id="photoUpload" accept="image/*" onchange="previewFile(this,'photoBox')"/>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label text-muted">Signature *</label>
+                <div class="upload-box" id="signBox">
+                  <i class="fas fa-signature fa-2x text-muted mb-2"></i>
+                  <p class="text-muted small mb-1">Click to upload signature</p>
+                  <p class="text-muted" style="font-size:11px;">JPG/PNG, max 100KB</p>
+                  <input type="file" class="d-none" id="signUpload" accept="image/*" onchange="previewFile(this,'signBox')"/>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label text-muted">Graduation Certificate *</label>
+                <div class="upload-box" id="gradBox">
+                  <i class="fas fa-file-pdf fa-2x text-muted mb-2"></i>
+                  <p class="text-muted small mb-1">Click to upload</p>
+                  <p class="text-muted" style="font-size:11px;">PDF, max 1MB</p>
+                  <input type="file" class="d-none" id="gradUpload" accept=".pdf" onchange="previewFile(this,'gradBox')"/>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label text-muted">ID Proof (Aadhar/PAN) *</label>
+                <div class="upload-box" id="idBox">
+                  <i class="fas fa-id-card fa-2x text-muted mb-2"></i>
+                  <p class="text-muted small mb-1">Click to upload</p>
+                  <p class="text-muted" style="font-size:11px;">PDF/JPG, max 500KB</p>
+                  <input type="file" class="d-none" id="idUpload" accept=".pdf,image/*" onchange="previewFile(this,'idBox')"/>
+                </div>
+              </div>
+            </div>
+            <div class="d-flex justify-content-between mt-4">
+              <button type="button" class="btn btn-outline-secondary px-4" onclick="prevStep(3)">
+                <i class="fas fa-arrow-left me-2"></i>Back
+              </button>
+              <button type="button" class="btn btn-gradient px-5" onclick="nextStep(3)">
+                Next <i class="fas fa-arrow-right ms-2"></i>
+              </button>
+            </div>
+          </div>
+
+          <!-- Step 4: Confirm -->
+          <div class="form-step d-none" id="formStep4">
+            <h4 class="text-white mb-4"><i class="fas fa-check-circle me-2 text-gradient"></i>Review & Submit</h4>
+            <div class="review-box" id="reviewBox"></div>
+            <div class="form-check mt-4">
+              <input class="form-check-input" type="checkbox" id="agreeTerms" required/>
+              <label class="form-check-label text-muted" for="agreeTerms">
+                I confirm that all information provided is accurate and I agree to the
+                <a href="#" class="text-gradient">Terms & Conditions</a>.
+              </label>
+            </div>
+            <div class="d-flex justify-content-between mt-4">
+              <button type="button" class="btn btn-outline-secondary px-4" onclick="prevStep(4)">
+                <i class="fas fa-arrow-left me-2"></i>Back
+              </button>
+              <button type="submit" class="btn btn-gradient px-5" id="submitBtn">
+                <i class="fas fa-paper-plane me-2"></i>Submit Application
+              </button>
+            </div>
+          </div>
+
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Success Modal -->
+<div class="modal fade" id="successModal" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content bg-dark-card border-0">
+      <div class="modal-body text-center py-5">
+        <div class="success-animation mb-4">
+          <i class="fas fa-check-circle fa-5x text-success"></i>
+        </div>
+        <h3 class="text-white fw-bold">Registration Successful!</h3>
+        <p class="text-muted mt-2">Your application has been submitted. Your Exam Hall Ticket will be sent to your registered email.</p>
+        <div class="reg-id-box mt-3 mb-4">
+          <span class="text-muted small">Your Registration ID</span>
+          <h4 class="text-gradient fw-bold" id="regIdDisplay">ILTS-2026-XXXXX</h4>
+        </div>
+        <a href="exam.html" class="btn btn-gradient px-5">
+          <i class="fas fa-laptop-code me-2"></i>Proceed to Exam
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>
